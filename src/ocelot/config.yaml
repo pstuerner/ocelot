@@ -1,0 +1,4 @@
+mongodb:
+  username: XXX
+  password: XXX
+  authsource: XXX
