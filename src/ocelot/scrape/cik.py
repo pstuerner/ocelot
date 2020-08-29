@@ -6,7 +6,7 @@ from datetime import datetime as dt
 
 class CIKScraper(Scraper):
 
-    base_url = """https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&datea=&dateb=&company=&type=13f&SIC=&State=&Country=&CIK=&owner=include&accno=&start={start}&count={count}"""
+    base_url = """https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&datea=&dateb=&company=&type=13f-hr&SIC=&State=&Country=&CIK=&owner=include&accno=&start={start}&count={count}"""
 
     def __init__(self):
         super().__init__()

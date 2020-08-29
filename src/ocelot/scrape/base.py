@@ -8,7 +8,7 @@ class Scraper(object):
         password = config['mongodb']['password'],
         authSource = config['mongodb']['authsource']
     )
-    db = mc.ocelot
+    db = mc[config['mongodb']['database']]
 
     def __init__(self):
         pass

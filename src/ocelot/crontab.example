@@ -1,0 +1,2 @@
+# Scrape new reports every two hours
+0 */2 * * * ocelot scrape
