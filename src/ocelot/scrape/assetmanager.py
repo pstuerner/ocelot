@@ -66,7 +66,7 @@ class AssetManager():
                 self.logger.info(f'Skipping {acc_no}: Period of report before 2013/06/30')
                 continue
             
-            url_xml = f"https://www.sec.gov{soup.find_all('a', href=re.compile('.xml'))[-1]['href']}"
+            url_xml = f"https://www.sec.gov{soup.find('table', class_='tableFile').find_all('a', text=lambda x: x.lower().endswith('.xml'))[-1]['href']}"
             p = Portfolio(self.cik, acc_no, dt_period, dt_effective, url_xml)
 
             q = AssetManager.col_portfolios.find({'cik':self.cik, 'dt_period':dt_period})
