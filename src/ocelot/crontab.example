@@ -1,2 +1,3 @@
 # Scrape new reports every two hours
-0 */2 * * * ocelot scrape
+# ocelot path must be specified as cron cannot work with the setup.py entrypoint
+0 */2 * * * python3 /home/ubuntu/Projects/ocelot/src/ocelot scrape >/dev/null 2>&1
