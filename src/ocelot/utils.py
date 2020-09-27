@@ -6,6 +6,7 @@ from ocelot import config
 
 latest_filings_url = """https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&datea=&dateb=&company=&type=13f-hr&SIC=&State=&Country=&CIK=&owner=include&accno=&start={start}&count={count}"""
 cik_brk = '0001067983' # berkshire hathaway cik for testing purposes, company has lots of reports
+cik_2s = '0001478735' # twosigma cik for testing purposes
 
 mc = MongoClient(
     username = config['mongodb']['username'],
