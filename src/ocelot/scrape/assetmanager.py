@@ -37,16 +37,16 @@ class AssetManager():
         return portfolio_urls
     
     def scrape(self, portfolio_urls=[]):
-        q = AssetManager.col_assetmanagers.find_one({'cik':self.cik})
-        if q != None:
-            q = AssetManager.col_portfolios.find_one({'acc_no':self.acc_no})
-            if q != None:
+        query_am = AssetManager.col_assetmanagers.find_one({'cik':self.cik})
+        if query_am != None:
+            query_p = AssetManager.col_portfolios.find_one({'acc_no':self.acc_no})
+            if query_p != None:
                 self.logger.info(f'Skipping {self.acc_no}: Already exists')
                 return {'new':0, 'updated':0}
             else:
                 new = 0
                 updated = 1
-                self.company_name = q['name']
+                self.company_name = query_am['company_name']
         else:
             portfolio_urls = self.all_portfolio_urls([], self.cik, 0, 100)
             new = updated = 1
@@ -60,7 +60,10 @@ class AssetManager():
             soup = BeautifulSoup(requests.get(portfolio_url[0]).text, "html.parser")
             acc_no = re.findall(r'\d+-\d+-\d+', soup.find('div', id='secNum').text)[0]
             dt_period = dt.strptime(soup.find_all('div', class_='info')[-2].text, '%Y-%m-%d')
-            dt_effective = dt.strptime(soup.find_all('div', class_='info')[-1].text, '%Y-%m-%d')
+            try:
+                dt_effective = dt.strptime(soup.find_all('div', class_='info')[-1].text, '%Y-%m-%d')
+            except ValueError:
+                dt_period = dt.strptime(soup.find_all('div', class_='info')[-2].text, '%Y-%m-%d')
             
             if dt_period < dt(2013, 6, 30): # no uniform xml format before 2013/06/30
                 self.logger.info(f'Skipping {acc_no}: Period of report before 2013/06/30')
